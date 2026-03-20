@@ -1,0 +1,991 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="en">
+  <head>
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="I am a PhD student at the PCA Lab, Nanjing University.">
+    <meta name="keywords" content="Zeyu Cai, Computer Vision, AIGC, Human Centric AI">
+    <meta name="author" content="Xingyu Chen">
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="google-site-verification" content="xDNWUvx6Q5EWK5YYSyKvK8DZTmvXhKsGX203Ll-BFFE" >	
+    <meta name=viewport content="width=800">
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+    <meta name="generator" content="HTML Tidy for Linux/x86 (vers 11 February 2007), see www.w3.org">
+    
+    <style type="text/css">
+    @import url(https://fonts.googleapis.com/css?family=Roboto:400,400italic,500,500italic,700,700italic,900,900italic,300italic,300);
+    /* @import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons); */
+      /* Color scheme stolen from Sergey Karayev */
+      a {
+      /*color: #b60a1c;*/
+      color: #1772d0;
+      /*color: #bd0a36;*/
+      text-decoration:none;
+      }
+      a:focus, a:hover {
+      color: #f09228;
+      text-decoration:none;
+      }
+      body,td,th,tr,p,a {
+      font-family: 'Roboto', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      }
+      strong {
+      font-family: 'Roboto', sans-serif;
+      /*font-family: 'Lato', Verdana, Helvetica, sans-serif;*/
+      /*font-family: 'Avenir Next';*/
+      font-size: 15px;
+      font-weight: 400;
+      }
+      heading {
+      /*font-family: 'Lato', Verdana, Helvetica, sans-serif;*/
+      font-family: 'Roboto', sans-serif;
+      /*font-family: 'Avenir Next';*/
+      /*src: url("./fonts/Roboto_Mono_for_Powerline.ttf");*/
+      font-size: 24px;
+      font-weight: 400;
+      }
+      papertitle {
+      /*font-family: 'Lato', Verdana, Helvetica, sans-serif;*/
+      font-family: 'Roboto', sans-serif;
+      /*font-family: 'Avenir Next';*/
+      /*src: url("./fonts/Roboto_Mono_for_Powerline.ttf");*/
+      font-size: 15px;
+      font-weight:500;
+      }
+      name {
+      /*font-family: 'Lato', Verdana, Helvetica, sans-serif;*/
+      font-family: 'Roboto', sans-serif;
+      /*font-family: 'Avenir Next';*/
+      font-weight: 400;
+      font-size: 32px;
+      }
+      .one
+      {
+      width: 160px;
+      height: 140px;
+      position: relative;
+      }
+      .two
+      {
+      width: 160px;
+      height: 160px;
+      position: absolute;
+      transition: opacity .2s ease-in-out;
+      -moz-transition: opacity .2s ease-in-out;
+      -webkit-transition: opacity .2s ease-in-out;
+      }
+      .fade {
+       transition: opacity .2s ease-in-out;
+       -moz-transition: opacity .2s ease-in-out;
+       -webkit-transition: opacity .2s ease-in-out;
+      }
+      span.highlight {
+          background-color: #ffffd0;
+      }
+    </style>
+    <link rel="icon" type="image/png" href="img/star.png">
+    <title>Xingyu Chen - Homepage</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <script src="script/functions.js"></script>
+  </head>
+  <body>
+  <table width="800" border="0" align="center" cellspacing="0" cellpadding="0">
+    <tr>
+    <td>
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <!--<tr onmouseout="headshot_stop()" onmouseover="headshot_start()">-->
+        <tr onmouseout="avatar_stop()" onmouseover="avatar_start()">
+        <td width="67%" valign="middle">
+        <p align="center">
+          <name>Xingyu Chen (陈星宇)</name>
+        </p>
+        <p style="font-size: 17px;">
+          <!-- I am a PhD student at the <a style="font-size: inherit;" href="http://www.inception3d.fun/">Inception3D Lab</a>,  -->
+          <!-- <a style="font-size: inherit;" href="https://en.westlake.edu.cn/">Westlake University</a>,  -->
+          <!-- co-supervised by <a style="font-size: inherit;" href="https://apchenstu.github.io/">Anpei Chen</a> and <a style="font-size: inherit;" href="https://www.cvlibs.net/">Andreas Geiger</a>. -->
+          I am a PhD student jointly enrolled at <a style="font-size: inherit;" href="https://en.westlake.edu.cn/">Westlake University</a> and <a style="font-size: inherit;" href="https://www.zju.edu.cn/english/">Zhejiang University</a>, 
+          in the <a style="font-size: inherit;" href="http://www.inception3d.fun/">Inception3D Lab</a>,
+          co-supervised by <a style="font-size: inherit;" href="https://apchenstu.github.io/">Anpei Chen</a> and <a style="font-size: inherit;" href="https://www.cvlibs.net/">Andreas Geiger</a>.
+          
+        </p>
+
+        <p style="font-size: 17px;">I am fortunate to work with <a style="font-size: inherit;" href="https://xiuyuliang.cn/">Yuliang Xiu</a> at <a style="font-size: inherit;" href="https://xiuyuliang.cn/group.html">Endless AI Lab</a>
+          and interned at <a style="font-size: inherit;" href="https://ailab.tencent.com/ailab/en/index/">Tencent AI Lab</a>, collaborating with <a style="font-size: inherit;" href="https://xuanwangvc.github.io/">Xuan Wang</a> and <a style="font-size: inherit;" href="https://qzhang-cv.github.io/">Qi Zhang</a>. 
+          I got my M.S. from <a style="font-size: inherit;" href="http://en.xjtu.edu.cn">Xi'an Jiaotong University</a> and my B.S. from <a style="font-size: inherit;" href="http://english.cqu.edu.cn/">Chongqing University</a>.
+        </p>
+        <p style="font-size: 17px;">
+          My research topics include computer vision, machine learning, and computer graphics, specifically in spatial intelligence.
+        </p>
+
+        <p align=center>
+          <a href="mailto:roverxingyu@gmail.com">Email</a> &nbsp|&nbsp
+          <a href="https://scholar.google.com/citations?user=gDHPrWEAAAAJ&hl=en">Google Scholar</a> &nbsp|&nbsp
+          <a href="https://github.com/rover-xingyu/">GitHub</a>  &nbsp|&nbsp
+          <a href="https://x.com/RoverXingyu">Twitter</a>  &nbsp|&nbsp
+          <a href="https://bsky.app/profile/xingyu-chen.bsky.social">Bluesky</a>
+
+        </p>
+        </td>
+        <!-- <td width="33%">
+          <img src="img/me3.jpg" width="250" alt="headshot">
+        </td> -->
+
+        <td width="33%">
+          <!-- <a href="img/me3.jpg"> -->
+            <div class="one" style="width:250; height:auto; position:relative;">
+              <div class="two" id='avatar_image' style="width:250; height:auto; position:absolute; top:0; left:0;">
+                <img src="img/me4o.png" width="250" alt="alternative headshot" style="border-radius: 0%; aspect-ratio: 1/1; object-fit: cover;">
+              </div>
+              <img src='img/me3.jpg' width="250" alt="headshot" style="border-radius: 0%; aspect-ratio: 1/1; object-fit: cover;">
+            </div>
+          <!-- </a> -->
+          <script type="text/javascript">
+            function avatar_start() {
+              document.getElementById('avatar_image').style.opacity = "1";
+            }
+
+            function avatar_stop() {
+              document.getElementById('avatar_image').style.opacity = "0";
+            }
+            avatar_stop()
+          </script>
+        </td>
+
+      </tr>
+      </table>
+
+      <!-- <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td width="10%" valign="middle">
+          <a href="https://ethz.ch/en.html"><img src="media/eth_logo.png" width="120"></a>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://www.is.mpg.de/"><img src="media/mpi_logo.png" width="60"></a>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://research.google/"><img src="media/google_logo.png" width="55"></a>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://about.facebook.com/realitylabs/"><img src="media/frl_logo.png" width="60"></a>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://www.inria.fr/en/"><img src="media/inria_logo.jpg" width="90"></a>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://vision.in.tum.de"><img src="media/tum_logo.jpg" width="60"></a>
+        </td>	
+        <td width="10%" valign="middle">
+          <a href="https://www.vibot.org"><img src="media/vibot_logo_transparent.png" width="35"></a></td>
+        </td>
+        <td width="10%" valign="middle">
+          <a href="https://en.xjtu.edu.cn/"><img src="media/xjtu_logo.png" width="50"></a></td>
+        </td>	
+      </tr>
+      </table> -->
+
+
+      <!-- Academic Services -->
+      <!-- <table width="100%" align="left" border="0" cellspacing="0" cellpadding="0" style="margin-left: 0; padding-left: 0; margin-bottom: 0;">
+        <tr>
+          <td style="padding-left: 0;">
+            <table width="100%" border="0" cellspacing="20" style="margin-left: 0;">
+              <tr>
+                <td width="35%" style="vertical-align: top; padding-left: 0;">
+                  <strong style="font-size: 22px;">Academic Services</strong>
+                  <ul style="font-size: 17px; padding-left: 20px;">
+                    <li><strong style="font-size: 17px;">Conference Area Chair</strong> 
+                      <ul style="margin-top: 5px;">
+                        <li>NeurIPS 2025</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </td>
+                <td width="65%" style="vertical-align: top;">
+                  <ul style="font-size: 17px;">
+                    <li><strong style="font-size: 17px;">Conference Reviewer</strong>
+                      <ul style="margin-top: 10px;">
+                        <li>Computer Vision: CVPR, ICCV, ECCV, 3DV</li>
+                        <li>Machine Learning: NeurIPS, ICLR, ICML</li>
+                        <li>Robotics: IROS</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table> -->
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" style="margin-top: 0;">
+
+      <tr>
+        <td width="100%" valign="middle" style="padding-top: 0;">
+          <heading>Research</heading>
+          <p>
+            The world we see is constantly changing: how do intelligent systems generalize to new observations? 
+            This question led me to quest for an understanding of the mechanisms underlying spatial intelligence 
+            and to develop methods for enabling artificial intelligence with this remarkable capability. 
+          </p>
+          <p>
+            Specifically, I am investigating how generalizability can emerge from reusable 3D & 4D representations, 
+            how these representations of the dynamic 3D world could be learned from images & videos, 
+            and how inductive biases could serve as expert knowledge to reduce unknown parameters and make learning more efficient.  
+          </p>
+          <p><strong style="font-size: 16px;">Equal Contribution *, Corresponding Author †, Project Lead ⚑</strong>
+          </p>
+        </td>
+      </tr>
+      </table>
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" >
+        <tr onmouseout="human3r_stop()" onmouseover="human3r_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='human3r_image'><video width=100% height=100%  muted autoplay loop>
+              <source src="img/human3r.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/human3r.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function human3r_start() {
+                document.getElementById('human3r_image').style.opacity = "1";
+              }
+
+              function human3r_stop() {
+                document.getElementById('human3r_image').style.opacity = "0";
+              }
+              human3r_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://fanegg.github.io/Human3R/">
+              <img src="img/human3r_icon.png" style="height:20px; vertical-align:bottom; margin-right:0px;">
+              <papertitle>Human3R: Everyone Everywhere All at Once</papertitle>
+            </a>
+            <br>
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <strong>Xingyu Chen⚑</strong>,
+            <a href="https://yuxuan-xue.com/">Yuxuan Xue</a>,
+            <a href="https://apchenstu.github.io/">Anpei Chen</a>,
+            <a href="https://xiuyuliang.cn/">Yuliang Xiu†</a>,
+            <a href="https://virtualhumans.mpi-inf.mpg.de/">Gerard Pons-Moll</a>
+            <br >
+            arXiv, 2025
+            <br>
+            <a href="https://fanegg.github.io/Human3R/">project page</a> /
+            <a href="https://arxiv.org/abs/2510.06219">arXiv</a> /
+            <a href="https://github.com/fanegg/Human3R">code</a> /
+            <a href="https://fanegg.github.io/Human3R/interactive.html">interactive demo</a>
+            <p></p>
+            <p>
+              Online human-scene reconstruction in One model, One stage.
+            </p>
+              
+          </td>
+        </tr> 
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" >
+        <tr onmouseout="ttt3r_stop()" onmouseover="ttt3r_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='ttt3r_image'><video width=100% height=100% style="object-fit:fill;" muted autoplay loop>
+              <source src="img/ttt3r.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/ttt3r.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function ttt3r_start() {
+                document.getElementById('ttt3r_image').style.opacity = "1";
+              }
+
+              function ttt3r_stop() {
+                document.getElementById('ttt3r_image').style.opacity = "0";
+              }
+              ttt3r_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/TTT3R">
+              <img src="img/ttt3r_icon.png" style="height:20px; vertical-align:bottom; margin-right:0px;">
+              <papertitle>TTT3R: 3D Reconstruction as Test-Time Training</papertitle>
+            </a>
+            <br>
+            <strong>Xingyu Chen</strong>,
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <a href="https://xiuyuliang.cn/">Yuliang Xiu</a>,
+            <a href="https://www.cvlibs.net/">Andreas Geiger</a>,
+            <a href="https://apchenstu.github.io/">Anpei Chen†</a>
+            <br >
+            arXiv, 2025
+            <br>
+            <a href="https://rover-xingyu.github.io/TTT3R">project page</a> /
+            <a href="https://arxiv.org/abs/2509.26645">arXiv</a> /
+            <a href="https://github.com/Inception3D/TTT3R">code</a>
+            <p></p>
+            <p>
+              A simple state update rule to enhance length generalization for CUT3R.
+            </p>
+              
+          </td>
+        </tr> 
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20" >
+        <tr onmouseout="easi3r_stop()" onmouseover="easi3r_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='easi3r_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/Easi3R.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/Easi3R.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function easi3r_start() {
+                document.getElementById('easi3r_image').style.opacity = "1";
+              }
+
+              function easi3r_stop() {
+                document.getElementById('easi3r_image').style.opacity = "0";
+              }
+              easi3r_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://easi3r.github.io/">
+              <papertitle>🦣Easi3R: Estimating Disentangled Motion from DUSt3R Without Training</papertitle>
+            </a>
+            <br>
+            <strong>Xingyu Chen</strong>,
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <a href="https://xiuyuliang.cn/">Yuliang Xiu</a>,
+            <a href="https://www.cvlibs.net/">Andreas Geiger</a>,
+            <a href="https://apchenstu.github.io/">Anpei Chen†</a>
+            <br >
+            IEEE/CVF International Conference on Computer Vision (<strong>ICCV</strong>), 2025
+            <br>
+            <a href="https://easi3r.github.io/">project page</a> /
+            <a href="https://arxiv.org/abs/2503.24391">arXiv</a> /
+            <a href="https://github.com/Inception3D/Easi3R">code</a> /
+            <a href="https://easi3r.github.io/interactive.html">interactive demo</a>
+            <p></p>
+            <p>
+              <!-- A simple training-free approach adapting DUSt3R for dynamic scenes. -->
+              Easi3R adapts DUSt3R for 4D reconstruction by disentangling and repurposing its attention maps, making 4D reconstruction easier than ever!
+            </p>
+              
+          </td>
+        </tr> 
+        
+        <tr onmouseout="feat2gs_stop()" onmouseover="feat2gs_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='feat2gs_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/feat2gs.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/feat2gs.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function feat2gs_start() {
+                document.getElementById('feat2gs_image').style.opacity = "1";
+              }
+
+              function feat2gs_stop() {
+                document.getElementById('feat2gs_image').style.opacity = "0";
+              }
+              feat2gs_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://fanegg.github.io/Feat2GS/">
+              <papertitle>Feat2GS: Probing Visual Foundation Models with Gaussian Splatting</papertitle>
+            </a>
+            <br>
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <strong>Xingyu Chen</strong>,
+            <a href="https://apchenstu.github.io/">Anpei Chen</a>,
+            <a href="https://virtualhumans.mpi-inf.mpg.de/">Gerard Pons-Moll</a>,
+            <a href="https://xiuyuliang.cn/">Yuliang Xiu†</a>
+            <br >
+            IEEE/CVF Conference on Computer Vision and Pattern Recognition (<strong>CVPR</strong>), 2025
+            <br>
+            <a href="https://fanegg.github.io/Feat2GS/">project page</a> /
+            <a href="https://arxiv.org/abs/2412.09606">arXiv</a> /
+            <a href="https://youtu.be/4fT5lzcAJqo">video</a> /
+            <a href="https://github.com/fanegg/Feat2GS">code</a> /
+            <a href="https://huggingface.co/spaces/endless-ai/Feat2GS">demo</a> /
+            <a href="https://fanegg.github.io/feat2gs_gallery.html">gallery</a>
+            <p></p>
+            <p>A unified framework to probe "<i>texture and geometry awareness</i>" of visual foundation models. Novel view synthesis serves as an effective proxy for 3D evaluation.</p>
+              
+          </td>
+        </tr> 
+
+        <tr onmouseout="l2g_stop()" onmouseover="l2g_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='l2g_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/l2g.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/l2g.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function l2g_start() {
+                document.getElementById('l2g_image').style.opacity = "1";
+              }
+        
+              function l2g_stop() {
+                document.getElementById('l2g_image').style.opacity = "0";
+              }
+              l2g_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/L2G-NeRF/">
+              <papertitle>L2G-NeRF: Local-to-Global Registration for Bundle-Adjusting Neural Radiance Fields</papertitle>
+            </a>
+            <br>
+            <a href="https://fanegg.github.io/">Yue Chen*</a>,
+            <strong>Xingyu Chen*⚑</strong>,
+            <a href="https://xuanwangvc.github.io/">Xuan Wang†</a>,
+            <a href="https://qzhang-cv.github.io/">Qi Zhang</a>,
+            <a href="https://yuguo-xjtu.github.io/">Yu Guo†</a>,
+            <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=en">Ying Shan</a>,
+            <a href="https://scholar.google.com/citations?hl=zh-CN&user=uU2JTpUAAAAJ&view_op=list_works">Fei Wang</a>
+            <br>
+            IEEE/CVF Conference on Computer Vision and Pattern Recognition (<strong>CVPR</strong>), 2023
+            <br>
+            <a href="https://rover-xingyu.github.io/L2G-NeRF/">project page</a> /
+            <a href="https://arxiv.org/pdf/2211.11505.pdf">arXiv</a> /
+            <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Chen_Local-to-Global_Registration_for_Bundle-Adjusting_Neural_Radiance_Fields_CVPR_2023_paper.pdf">paper</a> /
+            <a href="https://github.com/rover-xingyu/L2G-NeRF">code</a> /
+            <a href="https://openaccess.thecvf.com/content/CVPR2023/supplemental/Chen_Local-to-Global_Registration_for_CVPR_2023_supplemental.pdf">supplementary</a> /
+            <a href="https://youtu.be/y8XP9Umt6Mw">video</a> /
+            <a href="https://rover-xingyu.github.io/L2G-NeRF/files/l2gnerf_poster.pdf">poster</a>
+            <p></p>
+            <p>
+              We combine local and global alignment via differentiable parameter estimation solvers to achieve robust bundle-adjusting Neural Radiance Fields. 
+            </p>
+          </td>
+        </tr> 
+
+          <tr onmouseout="uv_stop()" onmouseover="uv_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id='uv_image'><video  width=100% height=100% muted autoplay loop>
+                <source src="img/uv_volume.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+                </video></div>
+                <img src='img/retexture.png' width="160">
+              </div>
+              <script type="text/javascript">
+                function uv_start() {
+                  document.getElementById('uv_image').style.opacity = "1";
+                }
+          
+                function uv_stop() {
+                  document.getElementById('uv_image').style.opacity = "0";
+                }
+                uv_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <a href="https://fanegg.github.io/UV-Volumes/">
+                <papertitle>UV Volumes for Real-time Rendering of Editable Free-view Human Performance</papertitle>
+              </a>
+              <br>
+              <a href="https://fanegg.github.io/">Yue Chen*</a>,
+              <a href="https://xuanwangvc.github.io/">Xuan Wang*</a>,
+              <strong>Xingyu Chen</strong>,
+              <a href="https://qzhang-cv.github.io/">Qi Zhang</a>,
+              <a href="https://xiaoyu258.github.io/">Xiaoyu Li</a>,
+              <a href="https://yuguo-xjtu.github.io/">Yu Guo†</a>,
+              <a href="https://juewang725.github.io/">Jue Wang</a>,
+              <a href="https://scholar.google.com/citations?hl=zh-CN&user=uU2JTpUAAAAJ&view_op=list_works">Fei Wang</a>
+              <br>
+              IEEE/CVF Conference on Computer Vision and Pattern Recognition (<strong>CVPR</strong>), 2023
+              <br>
+              <a href="https://fanegg.github.io/UV-Volumes/">project page</a> /
+              <a href="https://arxiv.org/pdf/2203.14402.pdf">arXiv</a> /
+              <a href="https://openaccess.thecvf.com/content/CVPR2023/papers/Chen_UV_Volumes_for_Real-Time_Rendering_of_Editable_Free-View_Human_Performance_CVPR_2023_paper.pdf">paper</a> /
+              <a href="https://github.com/fanegg/UV-Volumes">code</a> /
+              <a href="https://openaccess.thecvf.com/content/CVPR2023/supplemental/Chen_UV_Volumes_for_CVPR_2023_supplemental.pdf">supplementary</a> /
+              <a href="https://youtu.be/JftQnXLMmPc">video</a> /
+              <a href="https://fanegg.github.io/UV-Volumes/files/uvvolumes_poster.pdf">poster</a>
+              <p></p>
+              <p> We separate high-frequency human appearance from 3D volume and encode them into a 2D texture, which enables real-time rendering and retexturing.
+              </p>
+            </td>
+          </tr> 
+      
+        <tr onmouseout="PROCA_stop()" onmouseover="PROCA_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='PROCA_image'>
+                <img src='img/proca2.jpg' width="160">
+              </div>
+              <img src='img/proca1.jpg' width="160">
+            </div>
+            <script type="text/javascript">
+              function PROCA_start() {
+                document.getElementById('PROCA_image').style.opacity = "1";
+              }
+        
+              function PROCA_stop() {
+                document.getElementById('PROCA_image').style.opacity = "0";
+              }
+              PROCA_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://github.com/rover-xingyu/PROCA">
+              <papertitle>PROCA: Place Recognition under Occlusion and Changing Appearance via Disentangled Representations</papertitle>
+            </a>
+            <br>
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <strong>Xingyu Chen†⚑</strong>,
+            <a href="https://yicen-research.webador.com/">Yicen Li</a>
+            <br>
+            IEEE International Conference on Robotics and Automation (<strong>ICRA</strong>), 2023
+            <br>
+            <a href="https://arxiv.org/pdf/2211.11439.pdf">arXiv</a> /
+            <a href="https://ieeexplore.ieee.org/abstract/document/10160506">paper</a> /
+            <a href="https://github.com/rover-xingyu/PROCA">code</a> /
+            <a href="https://www.youtube.com/watch?v=W_tol4aHIQk">video</a> /
+            <a href="https://fanegg.github.io/PROCA/PROCA_poster.pdf">poster</a>
+            <p></p>
+            <p>
+              We decompose the image representation into place, appearance, and occlusion code and use the place code as a descriptor to retrieve images.
+            </p>
+          </td>
+        </tr>
+    
+        <tr onmouseout="bpnpl_stop()" onmouseover="bpnpl_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='bpnpl_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/bpnpl.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/bpnpl.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function bpnpl_start() {
+                document.getElementById('bpnpl_image').style.opacity = "1";
+              }
+
+              function bpnpl_stop() {
+                document.getElementById('bpnpl_image').style.opacity = "0";
+              }
+              bpnpl_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://arxiv.org/pdf/2210.04543.pdf">
+              <papertitle>Sparse Semantic Map-Based Monocular Localization in Traffic Scenes Using Learned 2D-3D Point-Line Correspondences</papertitle>
+            </a>
+            <br>
+            <strong>Xingyu Chen</strong>,
+            <a href="https://gr.xjtu.edu.cn/en/web/jrxue">Jianru Xue†</a>,
+            <a href="https://gr.xjtu.edu.cn/en/web/pangsm/4">Shanmin Pang</a>
+            <br>
+            IEEE Robotics and Automation Letters (<strong>RA-L</strong>), 2022
+            <br>
+            <a href="https://arxiv.org/pdf/2210.04543.pdf">arXiv</a> /
+            <a href="https://ieeexplore.ieee.org/document/9895296">paper</a> 
+            <p></p>
+            <p>
+              Given a sparse semantic map (e.g., pole lines, traffic sign midpoints), we estimate camera poses by learning 2D-3D point-line correspondences.
+            </p>
+          </td>
+        </tr> 
+    
+        <tr onmouseout="hanerf_stop()" onmouseover="hanerf_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='hanerf_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/video-teaser_crop.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/teaser.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function hanerf_start() {
+                document.getElementById('hanerf_image').style.opacity = "1";
+              }
+
+              function hanerf_stop() {
+                document.getElementById('hanerf_image').style.opacity = "0";
+              }
+              hanerf_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/Ha-NeRF/">
+              <papertitle>Ha-NeRF&#x1F606: Hallucinated Neural Radiance Fields in the Wild</papertitle>
+            </a>
+            <br>
+            <strong>Xingyu Chen</strong>,
+            <a href="https://qzhang-cv.github.io/">Qi Zhang†</a>,
+            <a href="https://xiaoyu258.github.io/">Xiaoyu Li</a>,
+            <a href="https://fanegg.github.io/">Yue Chen</a>,
+            <a href="https://scholar.google.com/citations?user=PhkrqioAAAAJ&hl=en">Ying Feng</a>,
+            <a href="https://xuanwangvc.github.io/">Xuan Wang</a>,
+            <a href="https://juewang725.github.io/">Jue Wang</a>
+            <br>
+            IEEE/CVF Conference on Computer Vision and Pattern Recognition (<strong>CVPR</strong>), 2022
+            <br>
+            <a href="https://rover-xingyu.github.io/Ha-NeRF/">project page</a> /
+            <a href="https://arxiv.org/pdf/2111.15246.pdf">arXiv</a> /
+            <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Chen_Hallucinated_Neural_Radiance_Fields_in_the_Wild_CVPR_2022_paper.pdf">paper</a> /
+            <a href="https://rover-xingyu.github.io/Ha-NeRF/files/Ha_NeRF_CVPR_2022_supp.pdf">supplementary</a> /
+            <a href="https://github.com/rover-xingyu/Ha-NeRF">code</a> /
+            <a href="https://www.youtube.com/watch?v=Qrz0gfcTdQs">video</a> /
+            <a href="https://rover-xingyu.github.io/Ha-NeRF/files/Ha_NeRF_poster.pdf">poster</a>
+            <p></p>
+            <p>
+              We recover NeRF from tourism images with variable appearance and occlusions, 
+              and consistently render free-occlusion views with hallucinated appearances.
+            </p>
+          </td>
+        </tr>
+
+        <!-- rdsslam -->
+        <tr onmouseout="rds_stop()" onmouseover="rds_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='rds_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/rds-slam_cccc.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/rds-slam2.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function rds_start() {
+                document.getElementById('rds_image').style.opacity = "1";
+              }
+
+              function rds_stop() {
+                document.getElementById('rds_image').style.opacity = "0";
+              }
+              rds_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://arxiv.org/pdf/2210.04562.pdf">
+              <papertitle>Using Detection, Tracking and Prediction in Visual SLAM to Achieve Real-time Semantic Mapping of Dynamic Scenarios</papertitle>
+            </a>
+            <br>
+            <strong>Xingyu Chen</strong>,
+            <a href="https://gr.xjtu.edu.cn/en/web/jrxue">Jianru Xue†</a>,
+            <a href="http://www.lotvs.net/JianwuFang/">Jianwu Fang</a>,
+            <a href="https://rover-xingyu.github.io/">Yuxin Pan</a>,
+            <a href="https://scholar.google.com.hk/citations?user=iqMe3p8AAAAJ&hl=zh-CN">Nanning Zheng</a>
+            <br>
+            IEEE Intelligent Vehicles Symposium (<strong>IV</strong>), 2020
+            <br>
+            <a href="https://arxiv.org/pdf/2210.04562.pdf">arXiv</a> /
+            <a href="https://ieeexplore.ieee.org/document/9304693">paper</a>
+            <p></p>
+            <p>
+              Instead of detecting objects in all frames, 
+              we detect only keyframes and embed an efficient prediction mechanism in other frames to find dynamic objects.  
+            </p>
+          </td>
+        </tr>     
+
+        <!-- NCM -->
+        <tr onmouseout="NCM_stop()" onmouseover="NCM_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='NCM_image'><video  width=100% height=100% muted autoplay loop>
+              <source src="img/ICRA2020_web_c.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/ICRA2020_overview.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function NCM_start() {
+                document.getElementById('NCM_image').style.opacity = "1";
+              }
+
+              function NCM_stop() {
+                document.getElementById('NCM_image').style.opacity = "0";
+              }
+              NCM_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://www.researchgate.net/profile/Pan-Yuxin/publication/340082526_Navigation_Command_Matching_for_Vision-based_Autonomous_Driving/links/600a288192851c13fe2a8d5a/Navigation-Command-Matching-for-Vision-based-Autonomous-Driving.pdf">
+              <papertitle>Navigation Command Matching for Vision-based Autonomous Driving</papertitle>
+            </a>
+            <br>
+            <a href="https://rover-xingyu.github.io/">Yuxin Pan</a>,
+            <a href="https://gr.xjtu.edu.cn/en/web/jrxue">Jianru Xue†</a>,
+            <a href="https://scholar.google.no/citations?user=n4v0ev8AAAAJ&hl=no">Pengfei Zhang</a>,
+            <a href="https://wlouyang.github.io/">Wanli Ouyang</a>,
+            <a href="http://www.lotvs.net/JianwuFang/">Jianwu Fang</a>,
+            <strong>Xingyu Chen</strong>
+            <br>
+            IEEE International Conference on Robotics and Automation (<strong>ICRA</strong>), 2020
+            <br>
+            <a href="https://www.researchgate.net/profile/Pan-Yuxin/publication/340082526_Navigation_Command_Matching_for_Vision-based_Autonomous_Driving/links/600a288192851c13fe2a8d5a/Navigation-Command-Matching-for-Vision-based-Autonomous-Driving.pdf">ResearchGate</a> /
+            <a href="https://ieeexplore.ieee.org/document/9196609">paper</a>
+            <p></p>
+            <p>We propose a navigation command matching model to discriminate actions generated from sub-optimal policies via smooth rewards.</p>
+          </td>
+        </tr>
+      </table>
+
+
+
+      
+    <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td width="100%" valign="middle">
+          <heading>Projects</heading>
+          <p>
+            I am passionate about bridging the physical and digital worlds by building next-generation AR and robotics.
+          </p>
+        </td>
+      </tr>
+      </table>
+
+      <table width="33%" align="left" border="0" cellspacing="0" cellpadding="20">
+        <tr>
+          <td style="padding:20px;vertical-align:middle" onmouseout="kuafu_stop()" onmouseover="kuafu_start()">
+            <div class="one">
+              <div class="two" id='kuafu_image'><video width=100% height=100% muted autoplay loop>
+                <source src="img/kuafu.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video></div>
+              <img src='img/kuafu.png' height="160">
+            </div>
+            <script type="text/javascript">
+              function kuafu_start() {
+                document.getElementById('kuafu_image').style.opacity = "1";
+              }
+              function kuafu_stop() {
+                document.getElementById('kuafu_image').style.opacity = "0";
+              }
+              kuafu_stop()
+            </script>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px;vertical-align:middle">
+            <a href="https://gr.xjtu.edu.cn/en/web/jrxue/xue">
+              <papertitle>Kuafu (Autonomous Driving)</papertitle>
+            </a>
+            <br>
+            <p style="font-size:15px;">GPS-Denied Navigation
+              <br>Intelligent Vehicle Challenge
+              <br>Odometry, Mapping, Localization
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <table width="33%" align="left" border="0" cellspacing="0" cellpadding="20">
+        <tr>
+          <td style="padding:20px;vertical-align:middle" onmouseout="robot_hand_stop()" onmouseover="robot_hand_start()">
+            <div class="one">
+              <div class="two" id='robot_hand_image'><video width=100% height=100% muted autoplay loop>
+                <source src="img/robot_hand.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video></div>
+              <img src='img/robot_hand.png' height="160">
+            </div>
+            <script type="text/javascript">
+              function robot_hand_start() {
+                document.getElementById('robot_hand_image').style.opacity = "1";
+              }
+              function robot_hand_stop() {
+                document.getElementById('robot_hand_image').style.opacity = "0";
+              }
+              robot_hand_stop()
+            </script>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/">
+              <papertitle>Robotic Hand</papertitle>
+            </a>
+            <br>
+            <p style="font-size:15px;">Hand gesture recognition
+              <br>Sensor fusion of IMU and BLE
+              <br>Robotic hand controller
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <table width="33%" align="left" border="0" cellspacing="0" cellpadding="20">
+        <tr>
+          <td style="padding:20px;vertical-align:middle" onmouseout="robot_arm_stop()" onmouseover="robot_arm_start()">
+            <div class="one">
+              <div class="two" id='robot_arm_image'><video width=100% height=100% muted autoplay loop>
+                <source src="img/robot_arm.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video></div>
+              <img src='img/robot_arm.jpg' height="160">
+            </div>
+            <script type="text/javascript">
+              function robot_arm_start() {
+                document.getElementById('robot_arm_image').style.opacity = "1";
+              }
+              function robot_arm_stop() {
+                document.getElementById('robot_arm_image').style.opacity = "0";
+              }
+              robot_arm_stop()
+            </script>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding:20px;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/">
+              <papertitle>Robotic Arm</papertitle>
+            </a>
+            <br>
+            <p style="font-size:15px;">Teleoperation 
+              <br>Hand gesture recognition
+              <br>Four-bar linkage structure
+            </p>
+          </td>
+        </tr>
+      </table>
+
+      <div style="clear:both;"></div>
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <tr>
+          <td width="100%" valign="middle" style="padding-bottom: 0;">
+            <heading>Talks</heading>
+          </td>
+        </tr>
+      </table>
+        <!-- infer_talk -->
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <tr onmouseout="infer_talk_stop()" onmouseover="infer_talk_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle;padding-top: 0;">
+            <div class="one">
+              <div class="two" id='infer_talk_image'>
+                <video width="100%" height="100%" muted autoplay loop>
+                  <source src="img/talk_inferring.mp4" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <img src='img/talk_inferring.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function infer_talk_start() {
+                document.getElementById('infer_talk_image').style.opacity = "1";
+              }
+
+              function infer_talk_stop() {
+                document.getElementById('infer_talk_image').style.opacity = "0";
+              }
+              infer_talk_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://rover-xingyu.github.io/">
+              <papertitle>Inferring the physical world and camera poses from images</papertitle>
+            </a>
+            <br>
+            <strong>ETH Zurich</strong>, 2023
+            <br>
+            <p>Sharing the intuition of dealing with dynamic objects in our previous work and give a prospect of handling the tracking problem via neural fields.
+            </p>
+          </td>
+        </tr> 
+        <!-- HaNeRF_talk -->
+        <tr onmouseout="HaNeRF_talk_stop()" onmouseover="HaNeRF_talk_start()">
+          <td style="padding:20px;width:25%;vertical-align:middle">
+            <div class="one">
+              <div class="two" id='HaNeRF_talk_image'><video  width=100% height=100% muted autoplay loop>
+              <img src='img/HaNeRF_talk.png' width="160">
+              Your browser does not support the video tag.
+              </video></div>
+              <img src='img/HaNeRF_talk.png' width="160">
+            </div>
+            <script type="text/javascript">
+              function HaNeRF_talk_start() {
+                document.getElementById('HaNeRF_talk_image').style.opacity = "1";
+              }
+
+              function HaNeRF_talk_stop() {
+                document.getElementById('HaNeRF_talk_image').style.opacity = "0";
+              }
+              HaNeRF_talk_stop()
+            </script>
+          </td>
+          <td style="padding:20px;width:75%;vertical-align:middle">
+            <a href="https://www.shenlanxueyuan.com/open/course/155">
+              <papertitle>光影幻象：神经辐射场中的时空流转 
+              <br> Neural Radiance Fields for Unconstrained Photo Collections </papertitle>
+            </a>
+            <br>
+            <strong>深蓝学院 (Shenlan College online education)</strong>, 2022
+            <br>
+            <p>Introduction about Neural Radiance Fields (NeRF) for unconstrained photo collections.
+            Including <a href="https://www.matthewtancik.com/nerf">NeRF</a>, <a href="https://nerf-w.github.io/">NeRF in the Wild</a>, and <a href="https://rover-xingyu.github.io/Ha-NeRF/">Ha-NeRF</a> 
+            </p>
+          </td>
+        </tr> 
+      </table>
+
+
+      <!-- Academic Services -->
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+        <tr>
+          <td>
+            <heading>Academic Services</heading>
+              <ul style="font-size: 17px;">
+                <li><strong style="font-size: 17px;">Conference Reviewer</strong>
+                  <ul style="margin-top: 10px;">
+                    <li>Computer Vision: CVPR, ICCV, ECCV, 3DV</li>
+                    <li>Machine Learning: NeurIPS, ICLR, ICML</li>
+                    <li>Robotics: IROS</li>
+                  </ul>
+                </li>
+              </ul>
+          </td>
+        </tr>
+      </table>
+
+
+      <table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+      <tr>
+        <td>
+        <br>
+        <p align="right">
+          <font size="2">
+          template adapted from <a href="https://jonbarron.info/"><font size="2">this awesome website</font></a>
+          <br>
+        </font>
+        </p>
+        </td>
+      </tr>
+      </table>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116734954-1"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-116734954-1');
+      </script>
+    </td>
+    </tr>
+  </table>
+  </body>
+</html>
+<!--  -->
