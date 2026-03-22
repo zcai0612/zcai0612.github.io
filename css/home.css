@@ -346,7 +346,7 @@ h3 {
   font-size: 0.92rem;
 }
 
-.portrait-status {
+.recent-status {
   display: block;
   width: min(100%, 320px);
   padding: 12px 18px;
@@ -362,7 +362,7 @@ h3 {
   text-align: center;
 }
 
-.status-heart {
+.recent-status-heart {
   display: inline-block;
   margin: 0 6px;
   color: #c43b5c;
