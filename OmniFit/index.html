@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta
+    name="description"
+    content="OmniFit is a multi-modal 3D body fitting framework for scale-agnostic dense landmark prediction across diverse human data sources."
+  >
+  <title>OmniFit | Multi-modal 3D Body Fitting</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="static/css/google_fonts.css">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+</head>
+
+<body>
+  <section class="hero hero-landing">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <p class="hero-kicker">Project Page</p>
+            <h1 class="title is-2 publication-title hero-title">
+              <span class="hero-brand">
+                <span class="hero-brand-o-wrap">
+                  <img class="hero-brand-o-image" src="static/images/OmniFit-Logo.png" alt="O logo">
+                </span>mniFit
+              </span><br>
+              <span class="hero-subtitle">Multi-modal 3D Body Fitting via<br>Scale-agnostic Dense Landmark Prediction</span>
+            </h1>
+            <p class="hero-summary">
+              A unified 3D Human body fitting framework that robustly handles full scans, partial depth, (RGB-conditioned) point clouds,
+              and scale-distorted AI-generated assets.
+            </p>
+
+            <div class="publication-authors hero-authors">
+              <span class="author-block"><a href="https://zcai0612.github.io/">Zeyu Cai<sup>1</sup></a></span>
+              <span class="author-block"><a href="https://xiuyuliang.cn/">Yuliang Xiu<sup>2</sup></a></span>
+              <span class="author-block"><a href="https://scholar.google.com/citations?user=BZG8NcEAAAAJ&amp;hl=en">Renke Wang<sup>1</sup></a></span>
+              <span class="author-block"><a href="https://initialneil.github.io/">Zhijing Shao<sup>4</sup></a></span>
+              <span class="author-block"><a href="https://xiaobenli00.github.io/publications/">Xiaoben Li<sup>2</sup></a></span>
+              <span class="author-block"><a href="https://ysysimon.com/">Siyuan Yu<sup>2</sup></a></span>
+              <span class="author-block"><a href="https://scholar.google.cz/citations?user=zlq2S_0AAAAJ&amp;hl=zh-CN&amp;oi=sra">Chao Xu<sup>3</sup></a></span>
+              <span class="author-block"><a href="https://scholar.google.cz/citations?user=t1emSE0AAAAJ&amp;hl=zh-CN&amp;oi=sra">Yang Liu<sup>3</sup></a></span>
+              <span class="author-block"><a href="https://scholar.google.cz/citations?user=ZNhTHywAAAAJ&amp;hl=zh-CN">Baigui Sun<sup>3</sup></a></span>
+              <span class="author-block"><a href="https://scholar.google.cz/citations?hl=zh-CN&amp;user=6CIDtZQAAAAJ">Jian Yang<sup>1</sup></a></span>
+              <span class="author-block"><a href="https://jessezhang92.github.io/">Zhenyu Zhang<sup>1</sup>&dagger;</a></span>
+            </div>
+
+            <div class="affiliation-list">
+              <span><sup>1</sup>Nanjing University</span>
+              <span><sup>2</sup>Westlake University</span>
+              <span><sup>3</sup>iROOTECH</span>
+              <span><sup>4</sup>The Hong Kong University of Science and Technology (Guangzhou)</span>
+            </div>
+
+            <p class="correspondence-line">&dagger; Corresponding Author</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body section-frame">
+        <div class="figure-card">
+          <img src="static/images/OmniFit_teaser_wide.svg" alt="Project teaser image" width="100%">
+        </div>
+
+        <h2 class="subtitle has-text-justified is-6">
+          <p>
+            <strong>OmniFit handles diverse 3D human data sources and input modalities.</strong>
+            <strong>(A)</strong> Raw point clouds from real-world captures.
+            <strong>(B)</strong> Point clouds jointly conditioned on a front-view RGB image.
+            <strong>(C)</strong> Scale-distorted AI-generated 3D human assets.
+            <strong>(D)</strong> Partial point clouds reconstructed from depth maps.
+            For each case, we display the <span class="input-highlight">input point cloud</span> alongside the
+            <span class="fit-highlight">fitted SMPL-X body</span>, demonstrating the robust fitting capability of
+            OmniFit across all modalities and data sources.
+          </p>
+        </h2>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light section-surface" id="abstract-section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="content-card">
+            <p class="section-label">Overview</p>
+            <h2 class="title is-4">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Fitting an underlying body model to 3D clothed human assets has been extensively studied, yet most
+                approaches focus on either single-modal inputs such as point clouds or multi-view images alone, often
+                requiring known metric scale, a constraint that is frequently unavailable, particularly for AIGC-generated
+                assets where scale distortion is prevalent. We propose <strong>OmniFit</strong>, where "Omni" signifies our
+                method's ability to seamlessly handle diverse multi-modal inputs such as full scans, partial depth, and image
+                captures, while remaining scale-agnostic across both real and synthetic assets. Our key innovation is a simple
+                yet effective conditional transformer decoder that directly transforms surface points into dense body landmarks,
+                which are subsequently used for SMPL-X parameter fitting. Additionally, an optional plug-and-play image adapter
+                enriches geometric details with visual cues to address potential incompleteness. We further introduce a dedicated
+                scale predictor to resize subjects into canonical proportions. Remarkably, <strong>OmniFit</strong> substantially
+                outperforms state-of-the-art methods by <span class="result-highlight">57.1%-70.9%</span> across daily and loose
+                clothing scenarios, making it the first body fitting method to surpass multi-view optimization baselines and the
+                first to achieve <strong>millimeter-level</strong> accuracy on CAPE and 4D-DRESS benchmarks.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-surface">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Method</h2>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Landmark Predictor</h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="figure-card">
+            <img src="static/images/landmark_predictor.png" alt="Landmark predictor" width="100%">
+          </div>
+
+          <h3 class="subtitle has-text-justified is-6">
+            <p>
+              <strong>The structure of the landmark predictor.</strong> Given an input point cloud, the landmark predictor
+              estimates dense 3D landmarks. The point cloud is first tokenized into point embeddings and then fed into the
+              point encoder to produce point features. The landmark decoder is a Perceiver-style transformer that takes
+              learnable landmark embeddings as queries, cross-attends to the point cloud features, and regresses the final
+              3D landmark coordinates via an MLP. Optionally, image features extracted by a pretrained image encoder can be
+              injected into the landmark decoder, further enhancing the prediction results with visual cues.
+            </p>
+          </h3>
+        </div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Image Adapter and Scale Predictor</h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="figure-card">
+            <img src="static/images/adapter_scale.png" alt="Image adapter and scale predictor" width="100%">
+          </div>
+
+          <h3 class="subtitle has-text-justified is-6">
+            <p>
+              <strong>Image adapter (left) and scale predictor (right).</strong>
+              <strong>(Left)</strong> The plug-and-play image adapter adds a lightweight cross-attention branch in parallel
+              with the existing point cloud cross-attention in each landmark decoder layer. Image features are fused alongside
+              point cloud features without modifying the base architecture, allowing the adapter to be enabled or disabled at
+              will. <strong>(Right)</strong> The scale predictor shares the same architecture as the point cloud encoder, but
+              adds a scale token to the patch embedding sequence. The token's output is passed through an MLP to regress a scale
+              factor <strong>S</strong>, which rescales the input point cloud to canonical human size.
+            </p>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-surface" id="results-section">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Visual Results</h2>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Comparison with Other Body Fitting Methods</h3>
+      <div class="comparison-labels">
+        <div>3D Human</div>
+        <div>IPNet</div>
+        <div>PTF</div>
+        <div>NICP</div>
+        <div>Arteq</div>
+        <div>ETCH</div>
+        <div class="comparison-ours">Ours</div>
+        <div>Ground Truth</div>
+      </div>
+
+      <div id="comparison-carousel" class="vc-wrapper">
+        <button class="vc-arrow prev" onclick="changeSlide('comparison-carousel', -1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="video-slides">
+          <div class="video-slide"><video autoplay muted loop playsinline controls width="100%"><source src="static/videos/comparison/01.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/02.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/03.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/04.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/05.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/06.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/07.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/08.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/09.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/10.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/11.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/12.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/13.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/14.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/15.mp4" type="video/mp4"></video></div>
+          <div class="video-slide" style="display:none;"><video muted loop playsinline controls width="100%"><source src="static/videos/comparison/16.mp4" type="video/mp4"></video></div>
+        </div>
+        <button class="vc-arrow next" onclick="changeSlide('comparison-carousel', 1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+      <div id="comparison-carousel-dots" class="vc-dots">
+        <button class="vc-dot active" onclick="goToSlide('comparison-carousel', 0)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 1)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 2)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 3)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 4)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 5)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 6)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 7)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 8)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 9)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 10)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 11)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 12)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 13)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 14)"></button>
+        <button class="vc-dot" onclick="goToSlide('comparison-carousel', 15)"></button>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-icon">&#9670;</span>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Scale Prediction</h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="figure-card">
+            <img src="static/images/scale_pred_res.png" alt="Scale prediction results" width="100%">
+          </div>
+
+          <h3 class="subtitle has-text-justified is-6">
+            <p>
+              <strong>Rescaling and body fitting results on generated 3D humans.</strong>
+              For each example, we show from left to right the original 3D human, the rescaled 3D human, and the
+              corresponding SMPL-X fitting result. <strong>OmniFit</strong> also performs well on scale-distorted human assets.
+            </p>
+          </h3>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-icon">&#9670;</span>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Results on Depth Capture</h3>
+      <div class="columns is-centered">
+        <div class="column">
+          <div class="figure-card">
+            <img src="static/images/depth_capture.png" alt="Results on depth capture" width="100%">
+          </div>
+
+          <h3 class="subtitle has-text-justified is-6">
+            <p>
+              <strong>Fitting results on depth capture.</strong>
+              We estimate the depth map from a full-body image using Sapiens, extract a point cloud, rescale the data,
+              and fit the 3D body with <strong>OmniFit</strong>.
+            </p>
+          </h3>
+        </div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-icon">&#9670;</span>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">Results on AI-generated Data</h3>
+      <h4 class="subtitle has-text-centered is-6">
+        <p>(3D Human, Fitting Result)</p>
+      </h4>
+
+      <div class="columns is-multiline">
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/02.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/04.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/05.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/06.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/07.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/08.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/09.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/10.mp4" type="video/mp4"></video></div>
+        <div class="column is-one-third"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/aigc/11.mp4" type="video/mp4"></video></div>
+      </div>
+
+      <div class="section-divider">
+        <div class="section-divider-line"></div>
+        <span class="section-divider-icon">&#9670;</span>
+        <div class="section-divider-line"></div>
+      </div>
+
+      <h3 class="title is-4 has-text-centered section-subtitle">More Fitting Results</h3>
+      <h4 class="subtitle has-text-centered is-6">
+        <p>(3D Human, Fitting Result, Ground Truth)</p>
+      </h4>
+
+      <div class="columns is-multiline">
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/01.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/02.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/03.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/04.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/05.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/06.mp4" type="video/mp4"></video></div>
+      </div>
+
+      <div class="has-text-centered mt-5">
+        <button class="button is-primary is-medium section-button" onclick="toggleMoreVideos2()">Check out more results</button>
+      </div>
+
+      <div id="more-videos-2" class="columns is-multiline mt-4" style="display: none;">
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/07.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/08.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/09.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/10.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/11.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/12.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/13.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/14.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/15.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/16.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/17.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/18.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/19.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/20.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/21.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/22.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/23.mp4" type="video/mp4"></video></div>
+        <div class="column is-half"><video autoplay controls muted loop preload="metadata" width="100%"><source src="static/videos/more_results/24.mp4" type="video/mp4"></video></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p class="footer-note">OmniFit project page.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    var carouselStates = {};
+
+    function goToSlide(carouselId, index) {
+      var carousel = document.getElementById(carouselId);
+      var slides = carousel.querySelectorAll('.video-slide');
+      var total = slides.length;
+      if (!carouselStates[carouselId]) carouselStates[carouselId] = 0;
+      var current = carouselStates[carouselId];
+      if (current === index) return;
+
+      var currentVideo = slides[current].querySelector('video');
+      if (currentVideo) currentVideo.pause();
+      slides[current].style.display = 'none';
+
+      current = (index + total) % total;
+      carouselStates[carouselId] = current;
+      slides[current].style.display = '';
+      var newVideo = slides[current].querySelector('video');
+      if (newVideo) newVideo.play();
+
+      var dotsContainer = document.getElementById(carouselId + '-dots');
+      if (dotsContainer) {
+        dotsContainer.querySelectorAll('.vc-dot').forEach(function(d, i) {
+          d.classList.toggle('active', i === current);
+        });
+      }
+    }
+
+    function changeSlide(carouselId, direction) {
+      if (!carouselStates[carouselId]) carouselStates[carouselId] = 0;
+      var carousel = document.getElementById(carouselId);
+      var total = carousel.querySelectorAll('.video-slide').length;
+      goToSlide(carouselId, carouselStates[carouselId] + direction);
+    }
+
+    function toggleMoreVideos2() {
+      var moreVideos = document.getElementById("more-videos-2");
+      var btn = event.target;
+
+      if (moreVideos.style.display === "none") {
+        moreVideos.style.display = "flex";
+        btn.textContent = "Hide more results";
+      } else {
+        moreVideos.style.display = "none";
+        btn.textContent = "Check out more results";
+      }
+    }
+  </script>
+</body>
+
+</html>
