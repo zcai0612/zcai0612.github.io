@@ -191,6 +191,90 @@ a:hover {
   letter-spacing: 0.03em;
 }
 
+.publication-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.15rem;
+}
+
+.publication-link-button {
+  min-height: 2.6rem;
+  padding: 0 1.05rem;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--text);
+  font-weight: 700;
+  box-shadow: var(--shadow-soft);
+}
+
+.publication-link-button:hover {
+  border-color: rgba(126, 16, 194, 0.3);
+  color: var(--accent);
+}
+
+.publication-link-button.arxiv-button {
+  border-color: #b31b1b;
+  background: #b31b1b;
+  color: #ffffff;
+  box-shadow: 0 10px 24px rgba(179, 27, 27, 0.18);
+}
+
+.publication-link-button.arxiv-button:hover {
+  border-color: #941414;
+  background: #941414;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(179, 27, 27, 0.24);
+}
+
+.arxiv-icon {
+  position: relative;
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-right: 0.15rem !important;
+}
+
+.arxiv-mark {
+  position: relative;
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+}
+
+.arxiv-mark::before,
+.arxiv-mark::after {
+  content: "";
+  position: absolute;
+  left: 0.45rem;
+  top: 0.05rem;
+  width: 0.1rem;
+  height: 0.9rem;
+  border-radius: 999px;
+  background: #ffffff;
+  transform-origin: center;
+}
+
+.arxiv-mark::before {
+  transform: rotate(38deg);
+}
+
+.arxiv-mark::after {
+  transform: rotate(-38deg);
+}
+
+.arxiv-icon::after {
+  content: "";
+  position: absolute;
+  width: 0.13rem;
+  height: 0.85rem;
+  border-radius: 999px;
+  background: #e0bd63;
+  transform: rotate(-24deg);
+}
+
 .teaser .hero-body {
   padding-top: 1.2rem;
   padding-bottom: 2rem;
@@ -475,7 +559,8 @@ a:hover {
   .hero-summary,
   .hero-authors,
   .affiliation-list,
-  .correspondence-line {
+  .correspondence-line,
+  .publication-links {
     max-width: 100%;
   }
 
