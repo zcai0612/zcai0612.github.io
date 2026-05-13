@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
       rel="stylesheet"
     >
-    <link rel="stylesheet" href="css/home.css?v=5">
+    <link rel="stylesheet" href="css/home.css?v=6">
     <script src="script/home.js?v=4" defer></script>
   </head>
   <body>
@@ -33,6 +33,7 @@
         <a href="#homepage">Homepage</a>
         <a href="#about">About Me</a>
         <a href="#news">News</a>
+        <a href="#work">Work Experience</a>
         <a href="#publications">Publications</a>
         <a href="#services">Academic Services</a>
       </div>
@@ -42,7 +43,15 @@
       <section class="hero section-card" id="homepage">
         <div class="hero-copy">
           <div class="section-heading" id="about">
-            <p class="eyebrow"><span class="eyebrow-icon" aria-hidden="true">&#10022;</span>About Me</p>
+            <p class="eyebrow">
+              <span class="eyebrow-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" focusable="false">
+                  <path d="M12 12.2a4.1 4.1 0 1 0 0-8.2 4.1 4.1 0 0 0 0 8.2Z"/>
+                  <path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/>
+                </svg>
+              </span>
+              About Me
+            </p>
           </div>
           <h1>
             Zeyu Cai
@@ -143,7 +152,21 @@
 
       <section class="section-card" id="news">
         <div class="section-heading">
-          <p class="eyebrow"><span class="eyebrow-icon" aria-hidden="true">&#127881;</span>News</p>
+          <p class="eyebrow">
+            <span class="eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M12 12.2v-7"/>
+                <path d="m12 12.2 5-5"/>
+                <path d="m12 12.2 6.6 1.8"/>
+                <path d="m12 12.2-5-5"/>
+                <path d="m12 12.2-6.6 1.8"/>
+                <path d="m12 12.2-1.8 6.4"/>
+                <path d="m12 12.2 1.8 6.4"/>
+                <path d="M12 12.2h.01"/>
+              </svg>
+            </span>
+            News
+          </p>
         </div>
         <div class="news-scroll" aria-label="Latest news">
           <div class="news-list">
@@ -180,9 +203,55 @@
         </div>
       </section>
 
+      <section class="section-card" id="work">
+        <div class="section-heading">
+          <p class="eyebrow">
+            <span class="eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M8.8 8V6.6A2.6 2.6 0 0 1 11.4 4h1.2a2.6 2.6 0 0 1 2.6 2.6V8"/>
+                <path d="M4.5 8h15v9.2a2.3 2.3 0 0 1-2.3 2.3H6.8a2.3 2.3 0 0 1-2.3-2.3V8Z"/>
+                <path d="M4.5 12.2h15"/>
+                <path d="M10 12.2v1.4h4v-1.4"/>
+              </svg>
+            </span>
+            Work Experience
+          </p>
+        </div>
+        <div class="work-logo-strip" aria-label="Work experience organizations">
+          <a class="work-logo logo-wide" href="https://www.bytedance.com/" target="_blank" rel="noopener noreferrer" aria-label="ByteDance">
+            <img src="imgs/work/bytedance.png" alt="ByteDance" loading="lazy">
+          </a>
+          <a class="work-logo logo-tall" href="https://mobile.vivo.com/" target="_blank" rel="noopener noreferrer" aria-label="vivo">
+            <img src="imgs/work/vivo.png" alt="vivo" loading="lazy">
+          </a>
+          <a class="work-logo logo-compact" href="https://www.sanygroup.com/" target="_blank" rel="noopener noreferrer" aria-label="SANY">
+            <img src="imgs/work/sany.png" alt="SANY" loading="lazy">
+          </a>
+          <a class="work-logo logo-wide" href="https://www.irootech.com/" target="_blank" rel="noopener noreferrer" aria-label="IROOTECH">
+            <img src="imgs/work/irootech.svg" alt="IROOTECH" loading="lazy">
+          </a>
+          <a class="work-logo" href="https://www.westlake.edu.cn/" target="_blank" rel="noopener noreferrer" aria-label="Westlake University">
+            <img src="imgs/work/westlake.png" alt="Westlake University" loading="lazy">
+          </a>
+          <a class="work-logo" href="https://www.zhejianglab.org/" target="_blank" rel="noopener noreferrer" aria-label="Zhejiang Lab">
+            <img src="imgs/work/zjlab.png" alt="Zhejiang Lab" loading="lazy">
+          </a>
+        </div>
+      </section>
+
       <section class="section-card publications-section" id="publications">
         <div class="section-heading">
-          <p class="eyebrow"><span class="eyebrow-icon" aria-hidden="true">&#128218;</span>Selected Publications</p>
+          <p class="eyebrow">
+            <span class="eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M5.5 4.5h5.2A3.3 3.3 0 0 1 14 7.8v11.7H8.6a3.1 3.1 0 0 0-3.1 3.1V4.5Z"/>
+                <path d="M18.5 4.5H14v15h5.5V5.5a1 1 0 0 0-1-1Z"/>
+                <path d="M8 8.5h3.2"/>
+                <path d="M8 12h3.2"/>
+              </svg>
+            </span>
+            Selected Publications
+          </p>
         </div>
         <p class="annotation">
           Equal Contribution *, Corresponding Author &dagger;, Project Lead &#9873;
@@ -469,7 +538,17 @@
 
       <section class="section-card" id="services">
         <div class="section-heading">
-          <p class="eyebrow"><span class="eyebrow-icon" aria-hidden="true">&#10003;</span>Academic Services</p>
+          <p class="eyebrow">
+            <span class="eyebrow-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" focusable="false">
+                <path d="M8.5 4.5h7l2 2v13h-11v-13l2-2Z"/>
+                <path d="M15.5 4.5v2h2"/>
+                <path d="m9.2 13.1 1.9 1.9 3.9-4.5"/>
+                <path d="M9 8.4h3.4"/>
+              </svg>
+            </span>
+            Academic Services
+          </p>
         </div>
         <div class="service-grid">
           <div>

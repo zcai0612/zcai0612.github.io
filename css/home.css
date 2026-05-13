@@ -194,11 +194,23 @@ h3 {
   width: 1.45em;
   height: 1.45em;
   border-radius: 999px;
-  background: var(--fresh);
-  color: var(--text);
+  border: 1px solid rgba(47, 126, 216, 0.18);
+  background: linear-gradient(135deg, rgba(238, 246, 255, 0.95), rgba(255, 255, 252, 0.98));
+  color: var(--primary-strong);
   font-size: 0.82em;
   line-height: 1;
   transform: translateY(-0.02em);
+  box-shadow: 0 5px 12px rgba(47, 126, 216, 0.11);
+}
+
+.eyebrow-icon svg {
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.75;
 }
 
 .hero h1,
@@ -452,6 +464,58 @@ h3 {
   background: rgba(17, 24, 39, 0.38);
 }
 
+.work-logo-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 14px;
+  align-items: stretch;
+}
+
+.work-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 108px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 252, 0.78);
+  box-shadow: 0 1px 0 rgba(17, 24, 39, 0.04);
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.work-logo:hover,
+.work-logo:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(47, 126, 216, 0.2);
+  background: rgba(255, 255, 252, 0.96);
+  color: var(--primary-strong);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.07);
+}
+
+.work-logo:focus-visible {
+  outline: 3px solid rgba(47, 126, 216, 0.24);
+  outline-offset: 3px;
+}
+
+.work-logo img {
+  width: 100%;
+  height: 58px;
+  object-fit: contain;
+}
+
+.work-logo.logo-wide img {
+  height: 46px;
+}
+
+.work-logo.logo-compact img {
+  height: 42px;
+}
+
+.work-logo.logo-tall img {
+  height: 66px;
+}
+
 .annotation {
   margin-top: 0;
   margin-bottom: 22px;
@@ -612,6 +676,10 @@ h3 {
     grid-template-columns: 1fr;
   }
 
+  .work-logo-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
   .hero {
     gap: 24px;
   }
@@ -676,5 +744,28 @@ h3 {
 
   .project {
     padding: 14px;
+  }
+
+  .work-logo-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .work-logo {
+    min-height: 90px;
+    padding: 16px;
+  }
+
+  .work-logo img {
+    height: 48px;
+  }
+
+  .work-logo.logo-wide img,
+  .work-logo.logo-compact img {
+    height: 38px;
+  }
+
+  .work-logo.logo-tall img {
+    height: 56px;
   }
 }
