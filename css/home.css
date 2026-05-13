@@ -178,39 +178,22 @@ h3 {
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   margin-bottom: 10px;
   color: var(--text);
-  font-size: 1.08rem;
+  font-size: 1.14rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 .eyebrow-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.45em;
-  height: 1.45em;
-  border-radius: 999px;
-  border: 1px solid rgba(47, 126, 216, 0.18);
-  background: linear-gradient(135deg, rgba(238, 246, 255, 0.95), rgba(255, 255, 252, 0.98));
-  color: var(--primary-strong);
-  font-size: 0.82em;
+  display: inline-block;
+  width: 1.35em;
+  font-size: 1.08em;
   line-height: 1;
-  transform: translateY(-0.02em);
-  box-shadow: 0 5px 12px rgba(47, 126, 216, 0.11);
-}
-
-.eyebrow-icon svg {
-  width: 1em;
-  height: 1em;
-  fill: none;
-  stroke: currentColor;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-width: 1.75;
+  text-align: center;
+  transform: translateY(-0.03em);
 }
 
 .hero h1,
@@ -466,7 +449,7 @@ h3 {
 
 .work-logo-strip {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 14px;
   align-items: stretch;
 }
@@ -677,7 +660,7 @@ h3 {
   }
 
   .work-logo-strip {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   }
 
   .hero {
@@ -747,7 +730,7 @@ h3 {
   }
 
   .work-logo-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
     gap: 10px;
   }
 
