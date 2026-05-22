@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>ReadPaper | Zeyu Cai</title>
+    <link rel="icon" type="image/jpeg" href="../imgs/common/xiaoxin.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600;8..60,700&display=swap"
+      rel="stylesheet"
+    >
+    <link rel="stylesheet" href="readpaper.css?v=1">
+    <script src="readpaper.js?v=1" defer></script>
+  </head>
+  <body>
+    <nav class="top-nav" aria-label="ReadPaper navigation">
+      <div class="top-nav-inner">
+        <a href="../">Homepage</a>
+        <a href="#add-paper">Add Paper</a>
+        <a href="#library">Library</a>
+      </div>
+    </nav>
+
+    <main class="page-shell">
+      <section class="lock-screen section-card" data-lock-screen>
+        <div class="lock-copy">
+          <p class="eyebrow">Private</p>
+          <h1>ReadPaper</h1>
+        </div>
+        <form class="lock-form" data-auth-form>
+          <label class="field-label" for="readpaper-password">Password</label>
+          <div class="password-row">
+            <input
+              id="readpaper-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              data-password-input
+            >
+            <button class="button button-primary" type="submit">Enter</button>
+          </div>
+          <p class="form-message" data-auth-message aria-live="polite"></p>
+        </form>
+      </section>
+
+      <div class="app-shell" data-paper-app hidden>
+        <header class="app-header">
+          <div>
+            <p class="eyebrow">ReadPaper</p>
+            <h1>Paper Queue</h1>
+          </div>
+          <div class="stats-grid" aria-label="Paper statistics">
+            <div>
+              <span data-stat-total>0</span>
+              <p>Total</p>
+            </div>
+            <div>
+              <span data-stat-unread>0</span>
+              <p>Unread</p>
+            </div>
+            <div>
+              <span data-stat-read>0</span>
+              <p>Read</p>
+            </div>
+          </div>
+        </header>
+
+        <section class="section-card form-card" id="add-paper">
+          <form class="paper-form" data-paper-form>
+            <input type="hidden" name="paperId" data-paper-id>
+            <div class="form-grid">
+              <label class="field field-wide">
+                <span class="field-label">Paper Link</span>
+                <input
+                  type="url"
+                  name="url"
+                  placeholder="https://arxiv.org/abs/..."
+                  required
+                  data-url-input
+                >
+              </label>
+
+              <label class="field title-field">
+                <span class="field-label">Title</span>
+                <input type="text" name="title" placeholder="Paper title" data-title-input>
+              </label>
+
+              <div class="field fetch-field">
+                <span class="field-label">arXiv</span>
+                <button class="button button-secondary" type="button" data-fetch-title>
+                  Fetch Title
+                </button>
+              </div>
+
+              <label class="field status-field">
+                <span class="field-label">Tag</span>
+                <select name="status" data-status-input>
+                  <option value="unread">Unread</option>
+                  <option value="read">Read</option>
+                </select>
+              </label>
+
+              <label class="field field-wide">
+                <span class="field-label">Description</span>
+                <textarea
+                  name="description"
+                  rows="4"
+                  placeholder="Notes, motivation, reading plan..."
+                  data-description-input
+                ></textarea>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <p class="form-message" data-form-message aria-live="polite"></p>
+              <div class="button-row">
+                <button class="button button-secondary" type="button" data-cancel-edit hidden>
+                  Cancel
+                </button>
+                <button class="button button-primary" type="submit" data-submit-paper>
+                  Add Paper
+                </button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="library-section" id="library">
+          <div class="library-toolbar">
+            <label class="search-field">
+              <span class="field-label">Search</span>
+              <input type="search" placeholder="Title, link, description..." data-search-input>
+            </label>
+
+            <div class="segmented-control" aria-label="Filter papers">
+              <button type="button" class="is-active" data-filter="all">All</button>
+              <button type="button" data-filter="unread">Unread</button>
+              <button type="button" data-filter="read">Read</button>
+            </div>
+
+            <label class="sort-field">
+              <span class="field-label">Sort</span>
+              <select data-sort-select>
+                <option value="updated-desc">Recently Updated</option>
+                <option value="created-desc">Newest Added</option>
+                <option value="created-asc">Oldest Added</option>
+                <option value="title-asc">Title A-Z</option>
+              </select>
+            </label>
+
+            <div class="library-tools">
+              <button class="button button-secondary" type="button" data-import-button>Import</button>
+              <button class="button button-secondary" type="button" data-export-button>Export</button>
+              <input type="file" accept="application/json" data-import-input hidden>
+            </div>
+          </div>
+
+          <div class="paper-list" data-paper-list></div>
+          <p class="empty-state" data-empty-state>No papers yet.</p>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>
