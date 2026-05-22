@@ -1,9 +1,9 @@
 (function () {
   "use strict";
 
-  const PASSWORD_HASH = "bb644300fbc1dc770ecb4342af41c77b97c7b72aea66ea299b64f647df8116b1";
-  const AUTH_KEY = "readpaper.auth.v1";
-  const STORAGE_KEY = "readpaper.papers.v1";
+  const API_BASE = String(window.READPAPER_API_BASE || "").replace(/\/+$/, "");
+  const TOKEN_KEY = "readpaper.apiToken.v1";
+  const TOKEN_EXPIRES_KEY = "readpaper.apiTokenExpires.v1";
 
   const state = {
     papers: [],
@@ -12,6 +12,8 @@
     sort: "updated-desc",
     editingId: null,
     fetchToken: 0,
+    loading: false,
+    syncError: "",
   };
 
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -51,7 +53,7 @@
     bindAuth();
     bindApp();
 
-    if (sessionStorage.getItem(AUTH_KEY) === PASSWORD_HASH) {
+    if (hasValidToken()) {
       unlock();
     } else {
       els.passwordInput.focus();
@@ -64,19 +66,20 @@
       setMessage(els.authMessage, "");
 
       try {
-        const enteredHash = await sha256(els.passwordInput.value);
+        ensureApiConfigured();
+        const response = await apiRequest("/auth", {
+          method: "POST",
+          auth: false,
+          body: { password: els.passwordInput.value },
+        });
 
-        if (enteredHash === PASSWORD_HASH) {
-          sessionStorage.setItem(AUTH_KEY, PASSWORD_HASH);
-          els.passwordInput.value = "";
-          unlock();
-          return;
-        }
-
-        setMessage(els.authMessage, "Wrong password.", "error");
-        els.passwordInput.select();
+        localStorage.setItem(TOKEN_KEY, response.token);
+        localStorage.setItem(TOKEN_EXPIRES_KEY, String(response.expiresAt));
+        els.passwordInput.value = "";
+        await unlock();
       } catch (error) {
-        setMessage(els.authMessage, "Password check is unavailable in this browser.", "error");
+        setMessage(els.authMessage, error.message || "Login failed.", "error");
+        els.passwordInput.select();
       }
     });
   }
@@ -113,126 +116,109 @@
     els.importInput.addEventListener("change", importPapers);
   }
 
-  function unlock() {
+  async function unlock() {
     els.lockScreen.hidden = true;
     els.app.hidden = false;
-    state.papers = loadPapers();
+    addSyncBanner();
     render();
+    await refreshPapers();
     els.urlInput.focus();
   }
 
-  async function sha256(text) {
-    if (!crypto.subtle) {
-      return sha256Fallback(text);
+  function addSyncBanner() {
+    if ($("[data-sync-banner]")) {
+      return;
     }
 
-    const bytes = new TextEncoder().encode(text);
-    const buffer = await crypto.subtle.digest("SHA-256", bytes);
-    return Array.from(new Uint8Array(buffer))
-      .map((byte) => byte.toString(16).padStart(2, "0"))
-      .join("");
+    const banner = document.createElement("div");
+    banner.className = "sync-banner";
+    banner.dataset.syncBanner = "";
+
+    const text = document.createElement("p");
+    text.dataset.syncMessage = "";
+    text.textContent = "Syncing with Cloudflare D1.";
+
+    const button = document.createElement("button");
+    button.className = "button button-secondary";
+    button.type = "button";
+    button.textContent = "Refresh";
+    button.addEventListener("click", refreshPapers);
+
+    banner.append(text, button);
+    els.app.insertBefore(banner, els.app.firstChild);
+    els.syncBanner = banner;
+    els.syncMessage = text;
   }
 
-  function sha256Fallback(text) {
-    const rightRotate = (value, amount) => (value >>> amount) | (value << (32 - amount));
-    const bytes = new TextEncoder().encode(text);
-    const bitLength = bytes.length * 8;
-    const paddedLength = (((bytes.length + 9 + 63) >> 6) << 6);
-    const padded = new Uint8Array(paddedLength);
-    padded.set(bytes);
-    padded[bytes.length] = 0x80;
+  async function refreshPapers() {
+    setLoading(true);
+    state.syncError = "";
+    updateSyncMessage("Loading papers...");
 
-    const view = new DataView(padded.buffer);
-    view.setUint32(paddedLength - 4, bitLength, false);
-
-    const hash = [
-      0x6a09e667,
-      0xbb67ae85,
-      0x3c6ef372,
-      0xa54ff53a,
-      0x510e527f,
-      0x9b05688c,
-      0x1f83d9ab,
-      0x5be0cd19,
-    ];
-    const constants = [
-      0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5,
-      0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
-      0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3,
-      0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
-      0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc,
-      0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-      0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7,
-      0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
-      0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13,
-      0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-      0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3,
-      0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-      0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5,
-      0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
-      0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208,
-      0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
-    ];
-
-    for (let offset = 0; offset < paddedLength; offset += 64) {
-      const words = new Uint32Array(64);
-      for (let index = 0; index < 16; index += 1) {
-        words[index] = view.getUint32(offset + index * 4, false);
+    try {
+      const response = await apiRequest("/papers");
+      state.papers = Array.isArray(response.papers) ? response.papers.map(normalizePaper).filter(Boolean) : [];
+      updateSyncMessage("Synced.");
+    } catch (error) {
+      state.syncError = error.message || "Sync failed.";
+      updateSyncMessage(state.syncError, true);
+      if (String(error.message || "").toLowerCase().includes("token")) {
+        clearToken();
+        els.app.hidden = true;
+        els.lockScreen.hidden = false;
+        els.passwordInput.focus();
       }
-      for (let index = 16; index < 64; index += 1) {
-        const s0 =
-          rightRotate(words[index - 15], 7) ^
-          rightRotate(words[index - 15], 18) ^
-          (words[index - 15] >>> 3);
-        const s1 =
-          rightRotate(words[index - 2], 17) ^
-          rightRotate(words[index - 2], 19) ^
-          (words[index - 2] >>> 10);
-        words[index] = (words[index - 16] + s0 + words[index - 7] + s1) >>> 0;
-      }
-
-      let [a, b, c, d, e, f, g, h] = hash;
-
-      for (let index = 0; index < 64; index += 1) {
-        const s1 = rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25);
-        const choice = (e & f) ^ (~e & g);
-        const temp1 = (h + s1 + choice + constants[index] + words[index]) >>> 0;
-        const s0 = rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22);
-        const majority = (a & b) ^ (a & c) ^ (b & c);
-        const temp2 = (s0 + majority) >>> 0;
-
-        h = g;
-        g = f;
-        f = e;
-        e = (d + temp1) >>> 0;
-        d = c;
-        c = b;
-        b = a;
-        a = (temp1 + temp2) >>> 0;
-      }
-
-      hash[0] = (hash[0] + a) >>> 0;
-      hash[1] = (hash[1] + b) >>> 0;
-      hash[2] = (hash[2] + c) >>> 0;
-      hash[3] = (hash[3] + d) >>> 0;
-      hash[4] = (hash[4] + e) >>> 0;
-      hash[5] = (hash[5] + f) >>> 0;
-      hash[6] = (hash[6] + g) >>> 0;
-      hash[7] = (hash[7] + h) >>> 0;
+    } finally {
+      setLoading(false);
+      render();
     }
-
-    return hash.map((value) => value.toString(16).padStart(8, "0")).join("");
   }
 
   async function handlePaperSubmit(event) {
     event.preventDefault();
     setMessage(els.formMessage, "");
 
+    const payload = await collectPaperPayload();
+    if (!payload) {
+      return;
+    }
+
+    const editingId = state.editingId;
+    const method = editingId ? "PATCH" : "POST";
+    const path = editingId ? `/papers/${encodeURIComponent(editingId)}` : "/papers";
+
+    try {
+      setLoading(true);
+      const response = await apiRequest(path, { method, body: payload });
+      const paper = normalizePaper(response.paper);
+
+      if (paper) {
+        if (editingId) {
+          state.papers = state.papers.map((item) => (item.id === editingId ? paper : item));
+        } else {
+          state.papers.unshift(paper);
+        }
+      } else {
+        await refreshPapers();
+      }
+
+      render();
+      resetForm();
+      setMessage(els.formMessage, editingId ? "Saved." : "Added.", "success");
+      updateSyncMessage("Synced.");
+    } catch (error) {
+      setMessage(els.formMessage, error.message || "Save failed.", "error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function collectPaperPayload() {
     const url = normalizeUrl(els.urlInput.value);
     if (!url) {
       setMessage(els.formMessage, "Please enter a valid link.", "error");
       els.urlInput.focus();
-      return;
+      return null;
     }
 
     let title = els.titleInput.value.trim();
@@ -245,57 +231,13 @@
       }
     }
 
-    if (!title) {
-      title = titleFromUrl(url);
-    }
-
-    const description = els.descriptionInput.value.trim();
-    const status = els.statusInput.value === "read" ? "read" : "unread";
-    const now = new Date().toISOString();
-    const editingId = state.editingId;
-    const duplicate = state.papers.find((paper) => paper.url === url && paper.id !== editingId);
-
-    if (duplicate) {
-      setMessage(els.formMessage, "This link is already in the list.", "error");
-      return;
-    }
-
-    if (editingId) {
-      state.papers = state.papers.map((paper) => {
-        if (paper.id !== editingId) {
-          return paper;
-        }
-        return {
-          ...paper,
-          url,
-          title,
-          description,
-          status,
-          arxivId,
-          updatedAt: now,
-        };
-      });
-      savePapers();
-      render();
-      resetForm();
-      setMessage(els.formMessage, "Saved.", "success");
-      return;
-    }
-
-    state.papers.unshift({
-      id: createId(),
+    return {
       url,
-      title,
-      description,
-      status,
+      title: title || titleFromUrl(url),
+      description: els.descriptionInput.value.trim(),
+      status: els.statusInput.value === "read" ? "read" : "unread",
       arxivId,
-      createdAt: now,
-      updatedAt: now,
-    });
-    savePapers();
-    render();
-    resetForm();
-    setMessage(els.formMessage, "Added.", "success");
+    };
   }
 
   async function fillTitleFromArxiv(showErrors) {
@@ -394,85 +336,7 @@
     }
   }
 
-  function extractArxivId(value) {
-    const source = String(value || "").trim();
-    if (!source) {
-      return "";
-    }
-
-    const direct = source.replace(/^arxiv:/i, "").replace(/\.pdf$/i, "");
-    if (isArxivId(direct)) {
-      return direct;
-    }
-
-    let url;
-    try {
-      url = new URL(source.match(/^https?:\/\//i) ? source : `https://${source}`);
-    } catch (error) {
-      return "";
-    }
-
-    const host = url.hostname.toLowerCase();
-    if (!host.endsWith("arxiv.org")) {
-      return "";
-    }
-
-    const path = decodeURIComponent(url.pathname).replace(/^\/+/, "");
-    const parts = path.split("/").filter(Boolean);
-    let id = "";
-
-    if (["abs", "pdf", "html", "e-print"].includes(parts[0])) {
-      id = parts.slice(1).join("/");
-    } else {
-      id = parts.join("/");
-    }
-
-    id = id.replace(/\.pdf$/i, "");
-    return isArxivId(id) ? id : "";
-  }
-
-  function isArxivId(value) {
-    return (
-      /^\d{4}\.\d{4,5}(v\d+)?$/i.test(value) ||
-      /^[a-z-]+(\.[A-Z]{2})?\/\d{7}(v\d+)?$/i.test(value)
-    );
-  }
-
-  function normalizeUrl(value) {
-    const trimmed = String(value || "").trim();
-    if (!trimmed) {
-      return "";
-    }
-
-    const arxivId = extractArxivId(trimmed);
-    if (arxivId && !trimmed.match(/^https?:\/\//i)) {
-      return `https://arxiv.org/abs/${arxivId}`;
-    }
-
-    try {
-      const url = new URL(trimmed.match(/^https?:\/\//i) ? trimmed : `https://${trimmed}`);
-      url.hash = "";
-      return url.toString();
-    } catch (error) {
-      return "";
-    }
-  }
-
-  function cleanTitle(value) {
-    return String(value || "").replace(/\s+/g, " ").trim();
-  }
-
-  function titleFromUrl(url) {
-    try {
-      const parsed = new URL(url);
-      const pathName = parsed.pathname.split("/").filter(Boolean).pop();
-      return cleanTitle(pathName ? decodeURIComponent(pathName).replace(/[-_]+/g, " ") : parsed.hostname);
-    } catch (error) {
-      return "Untitled Paper";
-    }
-  }
-
-  function handleListClick(event) {
+  async function handleListClick(event) {
     const button = event.target.closest("button[data-action]");
     if (!button) {
       return;
@@ -485,10 +349,10 @@
     }
 
     if (button.dataset.action === "toggle") {
-      paper.status = paper.status === "read" ? "unread" : "read";
-      paper.updatedAt = new Date().toISOString();
-      savePapers();
-      render();
+      await updatePaper(paper.id, {
+        ...paper,
+        status: paper.status === "read" ? "unread" : "read",
+      });
       return;
     }
 
@@ -498,9 +362,41 @@
     }
 
     if (button.dataset.action === "delete" && confirm(`Delete "${paper.title}"?`)) {
-      state.papers = state.papers.filter((item) => item.id !== paper.id);
-      savePapers();
+      await deletePaper(paper.id);
+    }
+  }
+
+  async function updatePaper(id, payload) {
+    try {
+      setLoading(true);
+      const response = await apiRequest(`/papers/${encodeURIComponent(id)}`, {
+        method: "PATCH",
+        body: payload,
+      });
+      const paper = normalizePaper(response.paper);
+      if (paper) {
+        state.papers = state.papers.map((item) => (item.id === id ? paper : item));
+        render();
+      }
+      updateSyncMessage("Synced.");
+    } catch (error) {
+      setMessage(els.formMessage, error.message || "Update failed.", "error");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function deletePaper(id) {
+    try {
+      setLoading(true);
+      await apiRequest(`/papers/${encodeURIComponent(id)}`, { method: "DELETE" });
+      state.papers = state.papers.filter((item) => item.id !== id);
       render();
+      updateSyncMessage("Synced.");
+    } catch (error) {
+      setMessage(els.formMessage, error.message || "Delete failed.", "error");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -533,7 +429,7 @@
     const papers = getVisiblePapers();
     els.paperList.replaceChildren(...papers.map(createPaperCard));
     els.emptyState.hidden = papers.length > 0;
-    els.emptyState.textContent = state.papers.length ? "No matching papers." : "No papers yet.";
+    els.emptyState.textContent = state.loading ? "Loading papers..." : state.papers.length ? "No matching papers." : "No papers yet.";
   }
 
   function renderStats() {
@@ -668,25 +564,6 @@
     }).format(new Date(value));
   }
 
-  function createId() {
-    if (crypto.randomUUID) {
-      return crypto.randomUUID();
-    }
-    return `paper-${Date.now()}-${Math.random().toString(16).slice(2)}`;
-  }
-
-  function loadPapers() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      if (!Array.isArray(parsed)) {
-        return [];
-      }
-      return parsed.map(normalizePaper).filter(Boolean);
-    } catch (error) {
-      return [];
-    }
-  }
-
   function normalizePaper(paper) {
     if (!paper || !paper.url) {
       return null;
@@ -705,8 +582,11 @@
     };
   }
 
-  function savePapers() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.papers));
+  function createId() {
+    if (crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
+    return `paper-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 
   function exportPapers() {
@@ -734,6 +614,7 @@
     }
 
     try {
+      setLoading(true);
       const text = await file.text();
       const parsed = JSON.parse(text);
       const incoming = Array.isArray(parsed) ? parsed : parsed.papers;
@@ -741,28 +622,186 @@
         throw new Error("Invalid import file");
       }
 
-      const byUrl = new Map(state.papers.map((paper) => [paper.url, paper]));
-      incoming.map(normalizePaper).filter(Boolean).forEach((paper) => {
-        byUrl.set(paper.url, {
-          ...byUrl.get(paper.url),
-          ...paper,
-          updatedAt: new Date().toISOString(),
-        });
+      const response = await apiRequest("/papers/import", {
+        method: "POST",
+        body: { papers: incoming },
       });
-      state.papers = Array.from(byUrl.values());
-      savePapers();
+      state.papers = Array.isArray(response.papers) ? response.papers.map(normalizePaper).filter(Boolean) : [];
       render();
-      setMessage(els.formMessage, "Imported.", "success");
+      setMessage(els.formMessage, `Imported ${response.imported || 0} papers.`, "success");
+      updateSyncMessage("Synced.");
     } catch (error) {
-      setMessage(els.formMessage, "Import failed.", "error");
+      setMessage(els.formMessage, error.message || "Import failed.", "error");
     } finally {
+      setLoading(false);
       els.importInput.value = "";
     }
+  }
+
+  async function apiRequest(path, options = {}) {
+    ensureApiConfigured();
+
+    const headers = {
+      Accept: "application/json",
+      ...(options.headers || {}),
+    };
+
+    if (options.body !== undefined) {
+      headers["Content-Type"] = "application/json";
+    }
+
+    if (options.auth !== false) {
+      const token = localStorage.getItem(TOKEN_KEY);
+      if (!token) {
+        throw new Error("Missing token");
+      }
+      headers.Authorization = `Bearer ${token}`;
+    }
+
+    const response = await fetch(`${API_BASE}${path}`, {
+      method: options.method || "GET",
+      headers,
+      body: options.body === undefined ? undefined : JSON.stringify(options.body),
+    });
+
+    let data = {};
+    try {
+      data = await response.json();
+    } catch (error) {
+      data = {};
+    }
+
+    if (!response.ok) {
+      if (response.status === 401) {
+        clearToken();
+      }
+      throw new Error(data.error || `Request failed (${response.status})`);
+    }
+
+    return data;
+  }
+
+  function ensureApiConfigured() {
+    if (!API_BASE || API_BASE.includes("REPLACE_WITH_YOUR_WORKERS_SUBDOMAIN")) {
+      throw new Error("Please set readpaper/api-config.js to your Worker URL.");
+    }
+  }
+
+  function hasValidToken() {
+    const token = localStorage.getItem(TOKEN_KEY);
+    const expiresAt = Number(localStorage.getItem(TOKEN_EXPIRES_KEY) || 0);
+    return Boolean(token && expiresAt && expiresAt > Math.floor(Date.now() / 1000) + 30);
+  }
+
+  function clearToken() {
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(TOKEN_EXPIRES_KEY);
+  }
+
+  function setLoading(loading) {
+    state.loading = loading;
+    [
+      els.submitPaperButton,
+      els.fetchTitleButton,
+      els.importButton,
+      els.exportButton,
+      ...$$(".paper-actions .button"),
+    ].forEach((button) => {
+      if (button) {
+        button.disabled = loading;
+      }
+    });
+  }
+
+  function updateSyncMessage(text, isError = false) {
+    if (!els.syncMessage || !els.syncBanner) {
+      return;
+    }
+    els.syncMessage.textContent = text;
+    els.syncBanner.classList.toggle("is-error", isError);
   }
 
   function setMessage(element, text, type) {
     element.textContent = text;
     element.classList.toggle("is-error", type === "error");
     element.classList.toggle("is-success", type === "success");
+  }
+
+  function extractArxivId(value) {
+    const source = String(value || "").trim();
+    if (!source) {
+      return "";
+    }
+
+    const direct = source.replace(/^arxiv:/i, "").replace(/\.pdf$/i, "");
+    if (isArxivId(direct)) {
+      return direct;
+    }
+
+    let url;
+    try {
+      url = new URL(source.match(/^https?:\/\//i) ? source : `https://${source}`);
+    } catch (error) {
+      return "";
+    }
+
+    const host = url.hostname.toLowerCase();
+    if (!host.endsWith("arxiv.org")) {
+      return "";
+    }
+
+    const path = decodeURIComponent(url.pathname).replace(/^\/+/, "");
+    const parts = path.split("/").filter(Boolean);
+    let id = "";
+
+    if (["abs", "pdf", "html", "e-print"].includes(parts[0])) {
+      id = parts.slice(1).join("/");
+    } else {
+      id = parts.join("/");
+    }
+
+    id = id.replace(/\.pdf$/i, "");
+    return isArxivId(id) ? id : "";
+  }
+
+  function isArxivId(value) {
+    return (
+      /^\d{4}\.\d{4,5}(v\d+)?$/i.test(value) ||
+      /^[a-z-]+(\.[A-Z]{2})?\/\d{7}(v\d+)?$/i.test(value)
+    );
+  }
+
+  function normalizeUrl(value) {
+    const trimmed = String(value || "").trim();
+    if (!trimmed) {
+      return "";
+    }
+
+    const arxivId = extractArxivId(trimmed);
+    if (arxivId && !trimmed.match(/^https?:\/\//i)) {
+      return `https://arxiv.org/abs/${arxivId}`;
+    }
+
+    try {
+      const url = new URL(trimmed.match(/^https?:\/\//i) ? trimmed : `https://${trimmed}`);
+      url.hash = "";
+      return url.toString();
+    } catch (error) {
+      return "";
+    }
+  }
+
+  function cleanTitle(value) {
+    return String(value || "").replace(/\s+/g, " ").trim();
+  }
+
+  function titleFromUrl(url) {
+    try {
+      const parsed = new URL(url);
+      const pathName = parsed.pathname.split("/").filter(Boolean).pop();
+      return cleanTitle(pathName ? decodeURIComponent(pathName).replace(/[-_]+/g, " ") : parsed.hostname);
+    } catch (error) {
+      return "Untitled Paper";
+    }
   }
 })();

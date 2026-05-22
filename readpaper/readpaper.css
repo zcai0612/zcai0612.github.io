@@ -207,6 +207,25 @@ button:disabled {
   gap: 28px;
 }
 
+.sync-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1px solid rgba(47, 126, 216, 0.16);
+  border-radius: var(--radius-md);
+  background: rgba(238, 246, 255, 0.72);
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.sync-banner.is-error {
+  border-color: rgba(196, 58, 86, 0.24);
+  background: var(--pick-soft);
+  color: var(--pick-strong);
+}
+
 .app-header {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -552,6 +571,7 @@ textarea:focus {
 @media (max-width: 940px) {
   .lock-screen,
   .app-header,
+  .sync-banner,
   .paper-card {
     grid-template-columns: 1fr;
   }
