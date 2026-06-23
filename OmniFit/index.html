@@ -43,6 +43,7 @@
               </span><br>
               <span class="hero-subtitle">Multi-modal 3D Body Fitting via<br>Scale-agnostic Dense Landmark Prediction</span>
             </h1>
+            <p class="hero-venue">ECCV 2026</p>
             <p class="hero-summary">
               A unified 3D Human body fitting framework that robustly handles full scans, partial depth, (RGB-conditioned) point clouds,
               and scale-distorted AI-generated assets.
@@ -92,16 +93,18 @@
     <div class="container is-max-desktop">
       <div class="hero-body section-frame">
         <div class="figure-card">
-          <img src="static/images/OmniFit_teaser_wide.svg" alt="Project teaser image" width="100%">
+          <video autoplay muted loop playsinline preload="metadata" width="100%" aria-label="Project teaser video">
+            <source src="static/videos/teaser.mp4" type="video/mp4">
+          </video>
         </div>
 
         <h2 class="subtitle has-text-justified is-6">
           <p>
             <strong>OmniFit handles diverse 3D human data sources and input modalities.</strong>
-            <strong>(A)</strong> Raw point clouds from real-world captures.
-            <strong>(B)</strong> Point clouds jointly conditioned on a front-view RGB image.
-            <strong>(C)</strong> Scale-distorted AI-generated 3D human assets.
-            <strong>(D)</strong> Partial point clouds reconstructed from depth maps.
+            <span class="caption-source caption-source-a"><strong>(A)</strong> Raw point clouds from real-world captures.</span>
+            <span class="caption-source caption-source-b"><strong>(B)</strong> Point clouds jointly conditioned on a front-view RGB image.</span>
+            <span class="caption-source caption-source-c"><strong>(C)</strong> Scale-distorted AI-generated 3D human assets.</span>
+            <span class="caption-source caption-source-d"><strong>(D)</strong> Partial point clouds reconstructed from depth maps.</span>
             For each case, we display the <span class="input-highlight">input point cloud</span> alongside the
             <span class="fit-highlight">fitted SMPL-X body</span>, demonstrating the robust fitting capability of
             OmniFit across all modalities and data sources.
